@@ -172,6 +172,20 @@ pascal_sbd_dataset = dataset_base.copy({
     'class_names': PASCAL_CLASSES,
 })
 
+climbing_dataset = dataset_base.copy({
+    'name': 'Climbing Dataset',
+
+    'train_images': './data/climbing_coco/',
+    'train_info': './data/climbing_coco/annotations.json',
+
+    'valid_images': './data/climbing_coco/',
+    'valid_info': './data/climbing_coco/annotations.json',
+
+    'has_gt': True,
+    'class_names': ('hold'),
+    'label_map': {0:1},
+})
+
 
 
 
@@ -765,6 +779,22 @@ yolact_resnet50_pascal_config = yolact_resnet50_config.copy({
         'pred_scales': [[32], [64], [128], [256], [512]],
         'use_square_anchors': False,
     })
+})
+
+yolact_climbing_config = yolact_resnet50_config.copy({
+    'name': 'yolact_climbing',
+
+    'dataset': climbing_dataset,
+
+    'num_classes': len(climbing_dataset.class_names) + 1,
+
+    'max_iter': 1024,  # iter / dataset_size = epochs
+
+    'lr_steps': (28000, 60000, 70000),  # Adjust the learning rate steps based on your dataset size
+
+    'batch_size': 1,  # Adjust the batch size based on your GPU memory
+
+    # Other hyperparameters and settings can be adjusted here as needed
 })
 
 # ----------------------- YOLACT++ CONFIGS ----------------------- #

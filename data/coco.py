@@ -83,6 +83,8 @@ class COCODetection(data.Dataset):
         self.name = dataset_name
         self.has_gt = has_gt
 
+        print("Number of images in the dataset:", len(self.ids))
+
     def __getitem__(self, index):
         """
         Args:

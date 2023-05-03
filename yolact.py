@@ -480,6 +480,8 @@ class Yolact(nn.Module):
 
         # For backward compatability, remove these (the new variable is called layers)
         for key in list(state_dict.keys()):
+            if key.startswith('prediction_layers') or key.startswith('semantic_seg_conv'):
+                del state_dict[key]
             if key.startswith('backbone.layer') and not key.startswith('backbone.layers'):
                 del state_dict[key]
         
@@ -487,7 +489,7 @@ class Yolact(nn.Module):
             if key.startswith('fpn.downsample_layers.'):
                 if cfg.fpn is not None and int(key.split('.')[2]) >= cfg.fpn.num_downsample:
                     del state_dict[key]
-        self.load_state_dict(state_dict)
+        self.load_state_dict(state_dict, strict=False)
 
     def init_weights(self, backbone_path):
         """ Initialize weights for training. """

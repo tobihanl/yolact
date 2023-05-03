@@ -240,8 +240,17 @@ def train():
     iteration = max(args.start_iter, 0)
     last_time = time.time()
 
+    print("Length of dataset:", len(dataset))
+    print("Batch size:", args.batch_size)
+
     epoch_size = len(dataset) // args.batch_size
     num_epochs = math.ceil(cfg.max_iter / epoch_size)
+
+    print('Epoch size:', epoch_size)
+    print('Max iter:', cfg.max_iter)
+    print('Num epochs:', num_epochs)
+
+    print('CFG', cfg)
     
     # Which learning rate adjustment step are we on? lr' = lr * gamma ^ step_index
     step_index = 0
